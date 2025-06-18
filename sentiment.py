@@ -1,6 +1,9 @@
 from transformers import pipeline
 import pandas as pd
 
+
+
+# yo added this comment 
 df = pd.read_excel("conversations.xlsx")  
 df.rename(columns={"Unnamed: 6":"Speaker", "Unnamed: 7": "Message"}, inplace=True)
 
