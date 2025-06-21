@@ -9,18 +9,15 @@ df.rename(columns = column_dictionary, inplace= True)
 
 
 
-conv_count = defaultdict(int)  
-conversations = defaultdict(list)  
-
-
-
 def get_conversations(df):
+  conv_count = defaultdict(int)  
+  conversations = defaultdict(list)  
   for _, row in df.iterrows():
       session_id = row["Session ID"]
       log_num = row["Log #"]
       speaker = row["Speaker"]
       text = row["Message"]
-      if session_id == 'NaN' or session_id == 'nan':
+      if pd.isna(session_id) or pd.isna(speaker) or pd.isna(text):
         continue
 
       # log_num == 0 is the start of a new conversation for this session
@@ -34,4 +31,4 @@ def get_conversations(df):
       conversations[key].append({"Speaker": speaker, "Message": text})
 
 
-#get_conversations(df)
+conversations = get_conversations(df)
