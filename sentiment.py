@@ -1,9 +1,6 @@
 from transformers import pipeline
 import pandas as pd
 
-
-
-# yo added this comment 
 df = pd.read_excel("conversations.xlsx")  
 df.rename(columns={"Unnamed: 6":"Speaker", "Unnamed: 7": "Message"}, inplace=True)
 
@@ -30,4 +27,9 @@ df.loc[customer_msgs.index, "Score"] = customer_msgs["Message"].apply(
 
 pd.set_option('display.max_colwidth', None)
 pd.set_option('display.max_rows', None)
-print(df[["Message", "Sentiment", "Score"]].dropna().head(50))
+#print(df[["Message", "Sentiment", "Score"]].dropna().head(50))
+positive_df = df[df["Sentiment"] == "Positive"][["Message", "Sentiment", "Score"]]
+positive_df = positive_df.sort_values(by="Score", ascending=False)
+
+for idx, row in positive_df.iterrows():
+    print(f"{row['Sentiment']:<10} | {row['Score']*100:.2f}% | {row['Message']}")
